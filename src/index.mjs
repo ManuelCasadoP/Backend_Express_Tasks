@@ -39,27 +39,24 @@ app.post("/api/v0.0/task/", (request, response)=>{
     response.sendStatus(201);
 })
 
-app.put("/api/v0.0/tasks/", (request, response)=>{
-  
-
+app.put("/api/v0.0/task/", (request, response)=>{
+    const updatedTask = request.body;
+    const oldTaskIdx = tasks.findIndex (
+      item => item.id === updatedTask.id
+    );
+    tasks[oldTaskIdx] = updatedTask
+    response.sendStatus(200);
 })
 
-app.delete("/api/v0.0/tasks/", (request, response)=>{
-  
-
+app.delete("/api/v0.0/task/", (request, response)=>{
+    const searchedTask = request.body;
+    const deleteTaskIdx = tasks.findIndex (
+      item => item.id === searchedTask.id
+    );
+    tasks.splice(deleteTaskIdx,1)
+    response.sendStatus(200);
 })
 
-/*
-app.get("/hello/", (request, response)=>{ 
-    console.log(request);
-    response.json({content: "Hola, qué tal?"});
-})
-
-app.get("/ok/", (request, response)=>{ 
-  response.sendStatus(404);
-})
-
-*/
 app.listen(PORT,()=>{
     console.log(`Servidor Express funcionando en puerto ${PORT}`);
 })
