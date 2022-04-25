@@ -1,4 +1,4 @@
-import {tasks} from "./models/taskModels.mjs"
+import { tasks } from "../models/taskModels.mjs";
 
 export function getTasksController (request, response){
     response.json(tasks);
