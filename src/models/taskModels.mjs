@@ -1,22 +1,22 @@
 export const tasks = [
     {
       id: 0,
-      description: "comprar pan",
+      description: "Comprar pan",
       done: false
     },
     {
       id: 1,
-      description: "comprar chorizo",
+      description: "Comprar chorizo",
       done: false
     },
     {
       id: 2,
-      description: "comprar queso",
+      description: "Comprar queso",
       done: false
     },
     {
       id: 3,
-      description: "hacer bocadillo",
+      description: "Hacer bocadillo",
       done: false
     }
 ];

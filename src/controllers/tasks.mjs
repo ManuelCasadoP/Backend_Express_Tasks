@@ -6,25 +6,51 @@ export function getTasksController (request, response){
 }
 
 export function postTasksController (request, response){
-    console.log(request.body);
-    tasks.push(request.body);
-    response.sendStatus(201);
-}
+    const postTask = (request.body);
+    const listTasksIdx = tasks.findIndex(
+      item => item.id === postTask.id
+    );
+
+    if (listTasksIdx >= 0){
+      console.log(`La tarea con el ID:"${postTask.id}" ya existe, ...modifique el ID o intente actualizar la tarea.`);
+      response.sendStatus(400);
+    } else {
+      tasks.push(request.body);
+      console.log(`La tarea "${postTask.description}" se ha añadido correctamente con el ID:"${postTask.id}"`);
+      console.log(request.body);
+      response.sendStatus(201);
+    }
+  }
 
 export function putTasksController (request, response){
-    const updatedTask = request.body;
-    const oldTaskIdx = tasks.findIndex (
-      item => item.id === updatedTask.id
+        const updatedTask = request.body;
+        const oldTaskIdx = tasks.findIndex (
+        item => item.id === updatedTask.id
     );
-    tasks[oldTaskIdx] = updatedTask
-    response.sendStatus(200);
+
+    if (oldTaskIdx < 0){
+        console.log(`La tarea con el ID:"${updatedTask.id}" no existe.`);
+        response.sendStatus(400);
+    } else {
+        tasks[oldTaskIdx] = updatedTask
+        console.log(`La Tarea con ID:"${updatedTask.id}" ha sido actualizada correctamente con la descripción "${updatedTask.description}".`);
+        response.sendStatus(200);
+    }
 }
 
 export function deleteTasksController (request, response){
-    const searchedTask = request.body;
-    const deleteTaskIdx = tasks.findIndex (
-      item => item.id === searchedTask.id
-    );
-    tasks.splice(deleteTaskIdx,1)
-    response.sendStatus(200);
+          const updatedTask = request.body;
+          const oldTaskIdx = tasks.findIndex (
+          item => item.id === updatedTask.id
+      );
+
+      if (oldTaskIdx < 0){
+          console.log(`La tarea con el ID:"${updatedTask.id}" no existe.`);
+          response.sendStatus(400);
+      } else {
+          tasks.splice(oldTaskIdx,1)
+          tasks[oldTaskIdx] = updatedTask;
+          console.log(`La Tarea con ID:"${updatedTask.id}" con la descripción "${updatedTask.description}" ha sido eliminada correctamente`);
+          response.sendStatus(200);
+      }
 }
