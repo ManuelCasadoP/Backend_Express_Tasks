@@ -12,7 +12,7 @@ app.post("/api/v0.0/task/", postTasksController);
 
 app.put("/api/v0.0/task/", putTasksController);
 
-app.delete("/api/v0.0/task/", deleteTasksController);
+app.delete("/api/v0.0/task/", deleteTasksController, getTasksController);
 
 app.listen(PORT,()=>{
     console.log(`Servidor Express funcionando en puerto ${PORT}`);
