@@ -17,10 +17,10 @@ export const tasksMessages = [
     },
     {
       id: 4,
-      description: 
+      description: ``
     },
     {
       id: 5,
-      description: 
+      description: ``
     }
 ];

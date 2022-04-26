@@ -38,20 +38,18 @@ export function putTasksController (request, response){
     }
 }
 
-export function deleteTasksController (request, response, next){
-          const updatedTask = request.body;
-          const oldTaskIdx = tasks.findIndex (
-          item => item.id === updatedTask.id
+export function deleteTasksController (request, response){
+          const searchedTask = request.body;
+          const deleteTaskIdx = tasks.findIndex (
+          item => item.id === searchedTask.id
       );
 
-      if (oldTaskIdx < 0){
-          console.log(`La tarea con el ID: ${updatedTask.id} no existe.`);
-          response.status(400).send(`<b>Solicitud Incorrecta</b><br><br><b>La tarea con el ID: ${updatedTask.id} no existe.</b>`);
+      if (deleteTaskIdx < 0){
+          console.log(`La tarea con el ID: ${searchedTask.id} no existe.`);
+          response.status(400).send(`<b>Solicitud Incorrecta</b><br><br><b>La tarea con el ID: ${searchedTask.id} no existe.</b>`);
       } else {
-          tasks.splice(oldTaskIdx,1)
-          tasks[oldTaskIdx] = updatedTask;
-          console.log(`La tarea ID: ${updatedTask.id} con la descripción "${updatedTask.description}" ha sido eliminada correctamente`);
-          response.status(200).send(`<b>Solicitud Aceptada</b><br><br><b>La tarea ID: ${updatedTask.id} con la descripción "${updatedTask.description}" ha sido eliminada correctamente</p>`);
-          next;
+          tasks.splice(deleteTaskIdx,1);
+          console.log(`La tarea ID: ${searchedTask.id} con la descripción "${searchedTask.description}" ha sido eliminada correctamente`);
+          response.status(200).send(`<b>Solicitud Aceptada</b><br><br><b>La tarea ID: ${searchedTask.id} con la descripción "${searchedTask.description}" ha sido eliminada correctamente</p>`);
       }
 }
