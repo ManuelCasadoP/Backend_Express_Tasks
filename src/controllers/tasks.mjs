@@ -6,7 +6,17 @@ export function getTasksController (request, response){
 }
 
 export function postTasksController (request, response){
-        try {   const postTask = (request.body);
+        try {               
+                class POST {
+                    constructor ({id=100, description="Tarea enviada sin descripción", done=false}){
+                        this.id = id;
+                        this.description = description;
+                        this.done = done;
+                    }
+                }
+           
+                const postTask = new POST(request.body);
+
                 const listTasksIdx = tasks.findIndex(
                 item => item.id === postTask.id
                 );
@@ -15,9 +25,9 @@ export function postTasksController (request, response){
                 console.log(`La tarea con el ID: ${postTask.id} ya existe, ...modifique el ID o intente actualizar la tarea.`);
                 response.status(400).send(`<b>Solicitud Incorrecta</b><br><br><b>La tarea con el ID: ${postTask.id} ya existe, ...modifique el ID o intente actualizar la tarea.</b>`);
             } else {
-                tasks.push(request.body);
+                tasks.push(postTask);
                 console.log(`La tarea "${postTask.description}" se ha añadido correctamente con el ID: ${postTask.id}`);
-                console.log(request.body);
+                console.log(postTask);
                 response.status(201).send(`<b>Solicitud Aceptada</b><br><br><b>La tarea "${postTask.description}" se ha añadido correctamente con el ID: ${postTask.id}</b>`);
             }
         } catch {
@@ -41,8 +51,8 @@ export function putTasksController (request, response){
                 response.status(200).send(`<b>Solicitud Aceptada</b><br><br><b>La tarea con ID: ${updatedTask.id} ha sido actualizada correctamente con la descripción "${updatedTask.description}".</p>`);
             }
         } catch {
-                console.log(`Error interno del Servidor.`);
-                response.status(500).send(`<b>Error interno del Servidor.</b>`); 
+                console.log(`Algo ha funcionado mal...`);
+                response.status(500).send(`<b>Algo ha funcionado mal...</b>`); 
         }    
 }
 
