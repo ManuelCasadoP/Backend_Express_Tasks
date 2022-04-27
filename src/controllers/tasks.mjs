@@ -85,8 +85,8 @@ export function deleteTasksController (request, response){
                 response.status(400).send(`<b>Solicitud Incorrecta</b><br><br><b>La tarea con el ID: ${searchedTask.id} no existe.<br> Introduzca un ID correcto...</b>`);
             } else {
                 tasks.splice(deleteTaskIdx,1);
-                console.log(`La tarea ID: ${searchedTask.id} con la descripción "${searchedTask.description}" ha sido eliminada correctamente`);
-                response.status(200).send(`<b>Solicitud Aceptada</b><br><br><b>La tarea ID: ${searchedTask.id} con la descripción "${searchedTask.description}" ha sido eliminada correctamente</p>`);
+                console.log(`La tarea con el ID: ${searchedTask.id} y la descripción "${searchedTask.description}" ha sido eliminada correctamente`);
+                response.status(200).send(`<b>Solicitud Aceptada</b><br><br><b>La tarea con el ID: ${searchedTask.id} y la descripción "${searchedTask.description}" ha sido eliminada correctamente</p>`);
             }
         } catch {
                 console.log(`Algo ha funcionado mal...`);
