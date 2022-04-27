@@ -14,7 +14,7 @@ export function postTasksController (request, response){
     if (listTasksIdx >= 0){
           console.log(`La tarea con el ID: ${postTask.id} ya existe, ...modifique el ID o intente actualizar la tarea.`);
           response.status(400).send(`<b>Solicitud Incorrecta</b><br><br><b>La tarea con el ID: ${postTask.id} ya existe, ...modifique el ID o intente actualizar la tarea.</b>`);
-     }else {
+     } else {
           tasks.push(request.body);
           console.log(`La tarea "${postTask.description}" se ha añadido correctamente con el ID: ${postTask.id}`);
           console.log(request.body);

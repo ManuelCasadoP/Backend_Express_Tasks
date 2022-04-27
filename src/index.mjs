@@ -1,4 +1,5 @@
 import express from "express";
+const PATH_PREFIX = "/api/v0.0"
 const app = express();
 const PORT = 3000;
 
@@ -6,13 +7,13 @@ app.use(express.json())
 
 import { getTasksController, postTasksController, putTasksController, deleteTasksController } from "./controllers/tasks.mjs";
 
-app.get("/api/v0.0/tasks/", getTasksController);
+app.get(PATH_PREFIX + "/tasks/", getTasksController);
 
-app.post("/api/v0.0/task/", postTasksController);
+app.post(PATH_PREFIX + "/task/", postTasksController);
 
-app.put("/api/v0.0/task/", putTasksController);
+app.put(PATH_PREFIX + "/task/", putTasksController);
 
-app.delete("/api/v0.0/task/", deleteTasksController);
+app.delete(PATH_PREFIX + "/task/", deleteTasksController);
 
 app.listen(PORT,()=>{
     console.log(`Servidor Express funcionando en puerto ${PORT}`);
