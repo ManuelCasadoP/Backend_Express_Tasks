@@ -1,10 +1,10 @@
 import { validate } from "jsonschema";
 
-import { postTaskSchema, putTaskSchema, deleteTaskSchema } from "../schemas/tasksSchemas.mjs";
+import { taskSchema } from "../schemas/taskSchemas.mjs";
 
-export function validatePostTaskJSON ( request, response, next) {
+export function validateTaskJSON ( request, response, next) {
     try {
-        const validation = validate(request.body, postTaskSchema)
+        const validation = validate(request.body, taskSchema)
         if (validation.valid) {
             next();
         } else {
@@ -16,7 +16,7 @@ export function validatePostTaskJSON ( request, response, next) {
         throw "Error validating data"
     }
 }
-
+/*
 export function validatePutTaskJSON ( request, response, next) {
     try {
         const validation = validate(request.body, putTaskSchema)
@@ -46,7 +46,7 @@ export function validateDeleteTaskJSON ( request, response, next) {
         throw "Error validating data"
     }
 }
-
+*/
 /*
 export function validatorFactory (schema) {
     return function JSONvalidator ( request, response, next) {
