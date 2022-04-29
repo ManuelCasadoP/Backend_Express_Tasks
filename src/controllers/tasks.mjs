@@ -1,5 +1,4 @@
 import shortid from "shortid";
-import {nextId} from "react-id-generator/lib/index.js";
 import { tasks } from "../models/taskModels.mjs";
 
 export function getOneTaskController (request, response){
@@ -22,7 +21,7 @@ export function getAllTasksController (request, response){
 export function postTasksController (request, response){
         try {    
                 class POST {
-                        constructor ({id={nextId}, description="Tarea enviada sin descripción", done=false}){
+                        constructor ({id=shortid(), description="Tarea enviada sin descripción", done=false}){
                         this.id = id;
                         this.description = description;
                         this.done = done;
@@ -52,7 +51,7 @@ export function postTasksController (request, response){
 
 export function putTasksController (request, response){
         try {   class PUT {
-                    constructor ({id=10000, description="Tarea enviada sin descripción", done=false}){
+                    constructor ({id, description="Tarea enviada sin descripción", done=false}){
                         this.id = id;
                         this.description = description;
                         this.done = done;
@@ -65,10 +64,17 @@ export function putTasksController (request, response){
                 item => item.id === updatedTask.id
             );
 
-            if (oldTaskIdx < 0){
+            if(isNaN(oldTaskIdx) || oldTaskIdx===""){
+                console.log(`No ha introducido el ID de tarea a modificar.`);
+                response.status(404).send(`<b>Solicitud Incorrecta</b><br><br><b>No ha introducido el ID de tarea a modificar.</b>`);
+            }
+
+            else if (oldTaskIdx < 0){
                 console.log(`La tarea con el ID: ${updatedTask.id} no existe.`);
                 response.status(404).send(`<b>Solicitud Incorrecta</b><br><br><b>La tarea con el ID: ${updatedTask.id} no existe.</b>`);
-            } else {
+            } 
+            
+            else {
                 tasks[oldTaskIdx] = updatedTask
                 console.log(`La Tarea con ID: ${updatedTask.id} ha sido actualizada correctamente con la descripción "${updatedTask.description}".`);
                 response.status(200).send(`<b>Solicitud Aceptada</b><br><br><b>La tarea con ID: ${updatedTask.id} ha sido actualizada correctamente con la descripción "${updatedTask.description}".</p>`);
@@ -81,7 +87,7 @@ export function putTasksController (request, response){
 
 export function deleteTasksController (request, response){
         try {   class DELETE {
-                    constructor ({id=10000, description="Tarea enviada sin descripción", done=false}){
+                    constructor ({id=shortid(), description="Tarea enviada sin descripción", done=false}){
                         this.id = id;
                         this.description = description;
                         this.done = done;
@@ -94,9 +100,9 @@ export function deleteTasksController (request, response){
                 item => item.id === searchedTask.id
                 );
 
-            if (deleteTaskIdx < 0){
-                console.log(`La tarea con el ID: ${searchedTask.id} no existe. Introduzca un ID correcto...`);
-                response.status(404).send(`<b>Solicitud Incorrecta</b><br><br><b>La tarea con el ID: ${searchedTask.id} no existe.<br> Introduzca un ID correcto...</b>`);
+            if (isNaN(deleteTaskIdx) || deleteTaskIdx==="" || deleteTaskIdx < 0){
+                console.log(`Esa tarea no existe. Introduzca un ID correcto...`);
+                response.status(404).send(`<b>Solicitud Incorrecta</b><br><br><b>Esa tarea no existe.<br> Introduzca un ID correcto...</b>`);
             } else {
                 tasks.splice(deleteTaskIdx,1);
                 console.log(`La tarea con el ID: ${searchedTask.id} y la descripción "${searchedTask.description}" ha sido eliminada correctamente`);
