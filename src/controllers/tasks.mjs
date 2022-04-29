@@ -1,6 +1,18 @@
 import { tasks } from "../models/taskModels.mjs";
 
-export function getTasksController (request, response){
+export function getOneTaskController (request, response){
+    try {
+        const task = tasks.find(
+            item => item.id === parseInt(request.params.id)
+        )
+        if ( task ) response.json(task)
+        else response.sendStatus(404);
+    } catch (err) {
+        response.sendStatus(400)
+    }
+}
+
+export function getAllTasksController (request, response){
     response.json(tasks);
     console.log(tasks);
 }
