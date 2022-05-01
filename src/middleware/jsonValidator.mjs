@@ -1,6 +1,23 @@
 import { validate } from "jsonschema";
 
-import { taskSchema } from "../schemas/taskSchemas.mjs";
+import { userSchema } from "../schemas/userSchema.mjs";
+
+import { taskSchema } from "../schemas/taskSchema.mjs";
+
+export function validateUserJSON ( request, response, next) {
+    try {
+        const validation = validate(request.body, userSchema)
+        if (validation.valid) {
+            next();
+        } else {
+            response.status(400);
+            response.send("Invalid user data provided");
+            console.error("Invalid user data provided");
+        }
+    } catch (err) {
+        throw "Error validating data"
+    }
+}
 
 export function validateTaskJSON ( request, response, next) {
     try {

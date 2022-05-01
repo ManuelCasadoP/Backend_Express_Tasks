@@ -3,11 +3,21 @@ const PATH_PREFIX = "/api/v0.0"
 const PORT = 3000;
 const app = express();
 
+import { getAllUsersController, postUserController } from "./controllers/usersController.mjs";
 import { getOneTaskController, getAllTasksController, postTasksController, putTasksController, deleteTasksController } from "./controllers/tasksController.mjs";
 import { validateTaskJSON } from "./middleware/jsonValidator.mjs";
 
 try {
     app.use(express.json())  
+
+    // EndPoints para /USERS/
+
+    app.get(PATH_PREFIX+"/users/", getAllUsersController)
+
+    app.post(PATH_PREFIX+"/user/", postUserController);
+
+
+    // EndPoints para /TASKS/
     
     app.get(PATH_PREFIX+"/tasks/:id", getOneTaskController);
 
