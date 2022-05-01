@@ -3,7 +3,7 @@ const PATH_PREFIX = "/api/v0.0"
 const PORT = 3000;
 const app = express();
 
-import { getOneTaskController, getAllTasksController, postTasksController, putTasksController, deleteTasksController } from "./controllers/tasks.mjs";
+import { getOneTaskController, getAllTasksController, postTasksController, putTasksController, deleteTasksController } from "./controllers/tasksController.mjs";
 import { validateTaskJSON } from "./middleware/jsonValidator.mjs";
 
 try {

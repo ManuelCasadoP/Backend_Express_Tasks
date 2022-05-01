@@ -87,7 +87,7 @@ export function putTasksController (request, response){
 
 export function deleteTasksController (request, response){
         try {   class DELETE {
-                    constructor ({id=shortid(), description="Tarea enviada sin descripción", done=false}){
+                    constructor ({id, description="Tarea enviada sin descripción", done=false}){
                         this.id = id;
                         this.description = description;
                         this.done = done;
