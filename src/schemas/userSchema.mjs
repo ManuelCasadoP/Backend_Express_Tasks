@@ -1,4 +1,5 @@
 export const userSchema = {
+    
     type: "object",
     properties: {
         userName:{

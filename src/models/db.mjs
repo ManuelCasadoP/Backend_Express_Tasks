@@ -1,21 +1,38 @@
 import sqlite3 from "sqlite3";
 
-const db = new sqlite
+export const db = new sqlite3.Database('./tasks.db', (err)=>{
 
+    if (err) {
+        throw err.message;
+    }
+    console.log("Connected to the Tasks Database");
+});
 
-db.run (`
+db.run(`
     CREATE TABLE
-        IF NOT EXIST
-        users (
+        IF NOT EXISTS
+        users(
             id INTEGER PRIMARY KEY,
             name TEXT NOT NULL,
-            password TEXT NOT NULL,
+            password TEXT NOT NULL
         )
 `);
 
+
 db.run (`
     CREATE TABLE
-        IF NOT EXIST
+        IF NOT EXISTS
+        tasks (
+            id INTEGER PRIMARY KEY,
+            description VARCHAR(100) NOT NULL,
+            done BOOLEAN DEFAULT false NOT NULL
+        )    
+`);
+
+/*
+db.run (`
+    CREATE TABLE
+        IF NOT EXISTS
         tasks (
             id INTEGER PRIMARY KEY,
             description VARCHAR(100) NOT NULL,
@@ -26,4 +43,5 @@ db.run (`
                     ON DELETE CASCADE
                     ON UPDATE CASCADE
         )    
-`)
+`);
+*/
