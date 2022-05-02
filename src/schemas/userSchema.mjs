@@ -1,8 +1,7 @@
 export const userSchema = {
-    
     type: "object",
     properties: {
-        username:{
+        userName:{
             description: "Unique username",
             type: "string"
         },

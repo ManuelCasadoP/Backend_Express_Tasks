@@ -5,7 +5,7 @@ const app = express();
 
 import { getAllUsersController, postUserController } from "./controllers/usersController.mjs";
 import { getOneTaskController, getAllTasksController, postTasksController, putTasksController, deleteTasksController } from "./controllers/tasksController.mjs";
-import { validateTaskJSON } from "./middleware/jsonValidator.mjs";
+import { validateUserJSON, validateTaskJSON } from "./middleware/jsonValidator.mjs";
 
 try {
     app.use(express.json())  
@@ -14,7 +14,7 @@ try {
 
     app.get(PATH_PREFIX+"/users/", getAllUsersController)
 
-    app.post(PATH_PREFIX+"/user/", postUserController);
+    app.post(PATH_PREFIX+"/user/", validateUserJSON, postUserController);
 
 
     // EndPoints para /TASKS/
