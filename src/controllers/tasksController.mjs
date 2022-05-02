@@ -1,4 +1,3 @@
-import shortid from "shortid";
 import { tasks } from "../models/taskModels.mjs";
 import { db } from "../models/db.mjs"
 
@@ -17,65 +16,33 @@ export function getOneTaskController (request, response){
 export function getAllTasksController (request, response){
 
     db.all(
-        `SELECT id, description, done, id_user FROM  tasks`,
+        `SELECT id, description, done FROM  tasks`,
         (err, data)=>{
             if (err){
-                console.log(`Algo ha funcionado mal...`);
-                response.status(500).send(`<b>Algo ha funcionado mal...</b>`);
-            }else {
+                console.log(err, `Algo ha funcionado mal...`);
+                response.status(500).send(err, `<b>Algo ha funcionado mal...</b>`);
+            } else {
                 response.json(data);
                 console.log(data);
             }
         });
 }
 
-/*
-export function getAllTasksController (request, response){
-    response.json(tasks);
-    console.log(tasks);
-}
-*/
-export function postTasksController (request, response){
-
-    try {    
-            class POST {
-                    constructor ({id=shortid(), description="Tarea enviada sin descripción", done=false}){
-                    this.id = id;
-                    this.description = description;
-                    this.done = done;
-                }
-           }
-           
-            const postTask = new POST(request.body);
-
-            const listTasksIdx = tasks.findIndex(
-            item => item.id === postTask.id
-            );
-
-        if (listTasksIdx >= 0){
-            console.log(`La tarea con el ID: ${postTask.id} ya existe, ...modifique el ID o intente actualizar la tarea.`);
-            response.status(400).send(`<b>Solicitud Incorrecta</b><br><br><b>La tarea con el ID: ${postTask.id} ya existe, ...modifique el ID o intente actualizar la tarea.</b>`);
-
-        } else {            
-            db.run(
-                `INSERT INTO tasks(description, done) VALUES ("${postTask.description}", ${postTask.done})`,
-                (err, postTask)=>{
-                    if (err) {
-                        console.log(`Algo ha funcionado mal...`, err);
-                        response.status(500).send(`<b>Algo ha funcionado mal...</b>`); 
-                    } else {
-                        console.log(`La tarea "${postTask.description}" se ha añadido correctamente con el ID: ${postTask.id}`);
-                        console.log(postTask);
-                        response.status(201).send(`<b>Solicitud Aceptada</b><br><br><b>La tarea "${postTask.description}" se ha añadido correctamente con el ID: ${postTask.id}</b>`);
-                    }
-                }
-            )            
+export function postTasksController (request, response) {
+    const { description, done } = request.body;
+    db.run(
+        `INSERT INTO tasks(description, done) VALUES ("${description}", ${done})`,
+        (err)=>{
+            if (err) {
+                console.error(err);
+                response.sendStatus(500)
+            } else {
+                response.status(201).send(`<b>Solicitud Aceptada</b><br><br><b>La tarea "${description}" se ha añadido correctamente.</b>`);
+            }
         }
-    } catch {
-            console.log(`Algo ha funcionado mal...`);
-            response.status(500).send(`<b>Algo ha funcionado mal...</b>`); 
-    }    
+    )
 }
+
 /*
 export function postTasksController (request, response){
         try {    
