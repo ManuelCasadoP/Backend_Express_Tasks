@@ -2,13 +2,14 @@ export const userSchema = {
     
     type: "object",
     properties: {
+        
         userName:{
             description: "Unique username",
-            type: "string"
+            type: String
         },
         password: {
             description: "alfanumeric password",
-            type: "string"
+            type: String
         }
     },
     additionalProperties: false

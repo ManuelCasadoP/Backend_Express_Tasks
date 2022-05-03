@@ -2,17 +2,14 @@ export const taskSchema = {
     
     type: "object",
     properties: {
-        id:{
-            description: "Unique ID",
-            type: "integer"
-        },
+        
         description: {
             description: "Task description",
-            type: "string"
+            type: String
         },
         done: {
             description: "Task status",
-            type: "boolean"
+            type: Boolean
         }
     },
     additionalProperties: false

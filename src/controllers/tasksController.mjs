@@ -1,6 +1,6 @@
-import { tasks } from "../models/taskModels.mjs";
 import { db } from "../models/db.mjs"
 
+/*
 export function getOneTaskController (request, response){
     try {
         const task = tasks.find(
@@ -12,6 +12,7 @@ export function getOneTaskController (request, response){
         response.sendStatus(400)
     }
 }
+*/
 
 export function getAllTasksController (request, response){
 
@@ -75,6 +76,7 @@ export function postTasksController (request, response){
         }    
   }
 */
+/*
 export function putTasksController (request, response){
         try {   class PUT {
                     constructor ({id, description="Tarea enviada sin descripción", done=false}){
@@ -139,3 +141,4 @@ export function deleteTasksController (request, response){
                 response.status(500).send(`<b>Algo ha funcionado mal...</b>`); 
         }   
 }
+*/
