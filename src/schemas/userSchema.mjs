@@ -1,16 +1,16 @@
 export const userSchema = {
-    
+    $id: "/user",
     type: "object",
     properties: {
-        
-        userName:{
-            description: "Unique username",
-            type: String
+        userName: {
+            description: "Unique userName",
+            type: "string"
         },
         password: {
-            description: "alfanumeric password",
-            type: String
-        }
+            description: "User secret",
+            type: "string"
+        },
     },
+    required: [ "userName", "password" ],
     additionalProperties: false
 }

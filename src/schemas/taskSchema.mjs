@@ -5,12 +5,13 @@ export const taskSchema = {
         
         description: {
             description: "Task description",
-            type: String
+            type: "string"
         },
         done: {
             description: "Task status",
             type: Boolean
         }
     },
+
     additionalProperties: false
 }

@@ -11,11 +11,11 @@ export function validateUserJSON ( request, response, next) {
             next();
         } else {
             response.status(400);
-            response.send("Invalid user data provided");
-            console.error("Invalid user data provided");
+            response.send("<b>JSON schema error:<br><br> Invalid User data provided</b>");
+            console.error("JSON schema error: \n Invalid User data provided");
         }
     } catch (err) {
-        throw "Error validating data"
+        throw "user schema: Error validating data"
     }
 }
 
@@ -26,11 +26,11 @@ export function validateTaskJSON ( request, response, next) {
             next();
         } else {
             response.status(400);
-            response.send("Invalid task data provided");
-            console.error("Invalid task data provided");
+            response.send("<b>JSON schema error:<br><br> Invalid Task data provided</b>");
+            console.error("JSON schema error: \n Invalid Task data provided");
         }
     } catch (err) {
-        throw "Error validating data"
+        throw "task schema: Error validating data"
     }
 }
 /*
