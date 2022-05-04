@@ -12,6 +12,6 @@ export const taskSchema = {
             type: Boolean
         }
     },
-
+    required: [ "description", "done" ],
     additionalProperties: false
 }
