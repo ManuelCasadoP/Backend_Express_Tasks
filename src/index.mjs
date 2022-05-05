@@ -5,7 +5,7 @@ const app = express();
 
 import { getAllUsersController, postUserController, deleteUserController } from "./controllers/usersController.mjs";
 import { getAllTasksController, postTasksController } from "./controllers/tasksController.mjs";
-import { validateUserJSON, validateTaskJSON } from "./middleware/jsonValidator.mjs";
+import { validatePostUserJSON, validateDeleteUserJSON, validateTaskJSON } from "./middleware/jsonValidator.mjs";
 
 try {
     app.use(express.json())  
@@ -14,9 +14,9 @@ try {
 
     app.get(PATH_PREFIX+"/users/", getAllUsersController)
 
-    app.post(PATH_PREFIX+"/user/", validateUserJSON, postUserController);
+    app.post(PATH_PREFIX+"/user/", validatePostUserJSON, postUserController);
     
-    app.delete(PATH_PREFIX+"/user/", deleteUserController);
+    app.delete(PATH_PREFIX+"/user/", validateDeleteUserJSON, deleteUserController);
 
 
     // EndPoints para /TASKS/
