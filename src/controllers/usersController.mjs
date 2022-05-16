@@ -1,5 +1,12 @@
 import { db } from "../models/db.mjs";
 
+/**
+ *  Controlador para Endpoint app.get /users/
+ *  ----------------------------------------
+ *  Realiza consulta de todos los usuarios a la Base de datos.
+ *  No realiza ninguna validación de errores. 
+ *  si la base de datos está vacía devuelve un array vacío.
+ */
 export function getAllUsersController (request, response){
 
     db.all(
@@ -15,6 +22,14 @@ export function getAllUsersController (request, response){
         });
 }
 
+/**
+ *  Controlador para Endpoint app.post /user/
+ *  ----------------------------------------
+ *  Realiza la inserción de un nuevo usuario en la Base de datos.
+ *  Realiza validación de errores:
+ *   - No acepta el envío de datos en formato incorrecto mediante validación de JSON.Schema.
+ *   - No acepta la inserción de un nombre de usuario repetido.
+ */
 export function postUserController (request, response) {
     
     const { userName, password } = request.body;
@@ -50,6 +65,15 @@ export function postUserController (request, response) {
     )
 }
 
+/**
+ *  Controlador para Endpoint app.put /user/
+ *  ----------------------------------------
+ *  Realiza la actualización, mediante la búsqueda por el id, de los datos de un usuario ya existente en la Base de datos.
+ *  Realiza validación de errores:
+ *   - No acepta el envío de datos en formato incorrecto mediante validación de JSON.Schema.
+ *   - No acepta la actualización de un id no existente.
+ *   - No acepta la actualización del nombre usuario con un nombre de usuario ya existente.
+ */
 export function putUserController (request, response) {
     
     const { id, userName, password } = request.body;
@@ -61,33 +85,55 @@ export function putUserController (request, response) {
                 console.log(`Algo ha funcionado mal...`, err);
                 response.status(500).send(`<b>Algo ha funcionado mal:<br>${err}</b>`);
             } else if (data){
-                
-                db.run(
-                    `UPDATE users SET name="${userName}", password="${password}" WHERE id=${id}`,
-                    (err)=>{
+
+                db.get(
+                    `SELECT name FROM users WHERE name="${userName}"`,
+                        (err, data)=>{
                         if (err) {
                             console.log(`Algo ha funcionado mal...`, err);
                             response.status(500).send(`<b>Algo ha funcionado mal:<br>${err}</b>`);
+                        } else if (data){
+                             console.log("No se puede realizar la operación, el usuario ya existe.");
+                             response.status(400).send(`<b>Solicitud denegada. <br>
+                                                        <br> No se puede realizar la operación de actualización del usuario con un nombre de usuario ya existente.<br>
+                                                        <br> Introduzca un nombre de usuario distinto.</b>`);
                         } else {
-                            console.log("El usuario se ha actualizado en la BBDD");
-                            response.status(201).send(`<b>Solicitud Aceptada<br>
-                                                       <br>El usuario se ha actualizado correctamente en la Base de Datos.</b>`);
+                            db.run(
+                                `UPDATE users SET name="${userName}", password="${password}" WHERE id=${id}`,
+                                (err)=>{
+                                    if (err) {
+                                        console.log(`Algo ha funcionado mal...`, err);
+                                        response.status(500).send(`<b>Algo ha funcionado mal:<br>${err}</b>`);
+                                    } else {
+                                        console.log("El usuario se ha actualizado en la BBDD");
+                                        response.status(201).send(`<b>Solicitud Aceptada<br>
+                                                                  <br>El usuario se ha actualizado correctamente en la Base de Datos.</b>`);
+                                    }
+                                }
+                            )        
                         }
-                    }
-                )
-                
-            } else {
+                    }        
+                )    
+
+            }  else {
 
                 console.log("No se puede realizar la operación, el usuario no existe.");
                 response.status(404).send(`<b>Solicitud denegada. <br>
-                                           <br> No se puede realizar la operación porque el usuario no existe.<br>
-                                           <br> Introduzca un nombre de usuario válido para actualizar.</b>`);
+                                        <br> No se puede realizar la operación porque el usuario no existe.<br>
+                                        <br> Introduzca un nombre de id usuario válido para actualizar.</b>`);
             }
         }
     )
 }
 
-
+/**
+ *  Controlador para Endpoint app.delete /user/
+ *  ----------------------------------------
+ *  Realiza la eliminación, mediante la búsqueda por el id, de los datos de un usuario existente en la Base de datos.
+ *  Realiza validación de errores:
+ *   - No acepta el envío de datos en formato incorrecto mediante validación de JSON.Schema.
+ *   - No acepta la eliminación de un id no existente.
+ */
 export function deleteUserController (request,response) {
 
     const { id } = request.body;

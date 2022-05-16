@@ -1,11 +1,11 @@
 import express from "express";
 const PATH_PREFIX = "/api/v0.0"
-const PORT = 3000;
+const PORT = 4000;
 const app = express();
 
 import { getAllUsersController, postUserController, putUserController, deleteUserController } from "./controllers/usersController.mjs";
 import { getAllTasksController, postTasksController } from "./controllers/tasksController.mjs";
-import { validatePostUserJSON, validateDeleteUserJSON, validateTaskJSON } from "./middleware/jsonValidator.mjs";
+import { validatePutUserJSON, validatePostUserJSON, validateDeleteUserJSON, validateTaskJSON } from "./middleware/jsonValidator.mjs";
 
 try {
     app.use(express.json())  
@@ -16,7 +16,7 @@ try {
 
     app.post(PATH_PREFIX+"/user/", validatePostUserJSON, postUserController);
 
-    app.put(PATH_PREFIX+"/user/", putUserController);
+    app.put(PATH_PREFIX+"/user/", validatePutUserJSON, putUserController);
     
     app.delete(PATH_PREFIX+"/user/", validateDeleteUserJSON, deleteUserController);
 
