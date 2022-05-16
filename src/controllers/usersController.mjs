@@ -50,6 +50,44 @@ export function postUserController (request, response) {
     )
 }
 
+export function putUserController (request, response) {
+    
+    const { id, userName, password } = request.body;
+
+    db.get(
+        `SELECT id FROM users WHERE id=${id}`,
+        (err, data)=>{
+            if (err) {
+                console.log(`Algo ha funcionado mal...`, err);
+                response.status(500).send(`<b>Algo ha funcionado mal:<br>${err}</b>`);
+            } else if (data){
+                
+                db.run(
+                    `UPDATE users SET name="${userName}", password="${password}" WHERE id=${id}`,
+                    (err)=>{
+                        if (err) {
+                            console.log(`Algo ha funcionado mal...`, err);
+                            response.status(500).send(`<b>Algo ha funcionado mal:<br>${err}</b>`);
+                        } else {
+                            console.log("El usuario se ha actualizado en la BBDD");
+                            response.status(201).send(`<b>Solicitud Aceptada<br>
+                                                       <br>El usuario se ha actualizado correctamente en la Base de Datos.</b>`);
+                        }
+                    }
+                )
+                
+            } else {
+
+                console.log("No se puede realizar la operación, el usuario no existe.");
+                response.status(404).send(`<b>Solicitud denegada. <br>
+                                           <br> No se puede realizar la operación porque el usuario no existe.<br>
+                                           <br> Introduzca un nombre de usuario válido para actualizar.</b>`);
+            }
+        }
+    )
+}
+
+
 export function deleteUserController (request,response) {
 
     const { id } = request.body;

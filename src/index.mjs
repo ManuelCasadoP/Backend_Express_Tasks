@@ -3,7 +3,7 @@ const PATH_PREFIX = "/api/v0.0"
 const PORT = 3000;
 const app = express();
 
-import { getAllUsersController, postUserController, deleteUserController } from "./controllers/usersController.mjs";
+import { getAllUsersController, postUserController, putUserController, deleteUserController } from "./controllers/usersController.mjs";
 import { getAllTasksController, postTasksController } from "./controllers/tasksController.mjs";
 import { validatePostUserJSON, validateDeleteUserJSON, validateTaskJSON } from "./middleware/jsonValidator.mjs";
 
@@ -15,6 +15,8 @@ try {
     app.get(PATH_PREFIX+"/users/", getAllUsersController)
 
     app.post(PATH_PREFIX+"/user/", validatePostUserJSON, postUserController);
+
+    app.put(PATH_PREFIX+"/user/", putUserController);
     
     app.delete(PATH_PREFIX+"/user/", validateDeleteUserJSON, deleteUserController);
 
