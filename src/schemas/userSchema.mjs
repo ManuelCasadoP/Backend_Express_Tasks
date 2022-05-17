@@ -1,4 +1,4 @@
-export const userPostSchema = {
+export const postUserSchema = {
     $id: "/user",
     type: "object",
     properties: {
@@ -17,7 +17,7 @@ export const userPostSchema = {
     additionalProperties: false
 }
 
-export const userPutSchema = {
+export const putUserSchema = {
     $id: "/user",
     type: "object",
     properties: {
@@ -41,7 +41,7 @@ export const userPutSchema = {
     additionalProperties: false
 }
 
-export const userDeleteSchema = {
+export const deleteUserSchema = {
     $id: "/user",
     type: "object",
     properties: {

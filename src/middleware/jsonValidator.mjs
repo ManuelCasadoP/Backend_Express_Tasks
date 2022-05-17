@@ -1,12 +1,12 @@
 import { validate } from "jsonschema";
 
-import { userPostSchema, userPutSchema, userDeleteSchema } from "../schemas/userSchema.mjs";
+import { postUserSchema, putUserSchema, deleteUserSchema } from "../schemas/userSchema.mjs";
 
-import { getOneTaskSchema, postTaskSchema } from "../schemas/taskSchema.mjs";
+import { getOneTaskSchema, postTaskSchema, deleteTaskSchema } from "../schemas/taskSchema.mjs";
 
 export function validatePostUserJSON ( request, response, next) {
     try {
-        const validation = validate(request.body, userPostSchema)
+        const validation = validate(request.body, postUserSchema)
         if (validation.valid) {
             next();
         } else {
@@ -21,7 +21,7 @@ export function validatePostUserJSON ( request, response, next) {
 
 export function validatePutUserJSON ( request, response, next) {
     try {
-        const validation = validate(request.body, userPutSchema)
+        const validation = validate(request.body, putUserSchema)
         if (validation.valid) {
             next();
         } else {
@@ -36,7 +36,7 @@ export function validatePutUserJSON ( request, response, next) {
 
 export function validateDeleteUserJSON ( request, response, next) {
     try {
-        const validation = validate(request.body, userDeleteSchema)
+        const validation = validate(request.body, deleteUserSchema)
         if (validation.valid) {
             next();
         } else {
@@ -76,6 +76,21 @@ export function validatePostTaskJSON ( request, response, next) {
         }
     } catch (err) {
         throw "POST Task schema: Error validating data"
+    }
+}
+
+export function validateDeleteTaskJSON ( request, response, next) {
+    try {
+        const validation = validate(request.body, deleteTaskSchema)
+        if (validation.valid) {
+            next();
+        } else {
+            response.status(400);
+            response.send("<b>JSON DELETE USER schema error:<br><br> Invalid User data provided</b>");
+            console.error("JSON DELETE USER schema error: \n Invalid User data provided");
+        }
+    } catch (err) {
+        throw "DELETE User schema: Error validating data"
     }
 }
 

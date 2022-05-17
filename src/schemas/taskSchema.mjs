@@ -1,5 +1,5 @@
 export const getOneTaskSchema = {
-    $id: "/user",
+    
     type: "object",
     properties: {
         id: {
@@ -27,5 +27,19 @@ export const postTaskSchema = {
         }
     },
     required: [ "description", "done" ],
+    additionalProperties: false
+}
+
+export const deleteTaskSchema = {
+    
+    type: "object",
+    properties: {
+        id: {
+            description: "id userName number",
+            type: "number",
+            minimun: 0
+        }
+    },
+    required: [ "id" ],
     additionalProperties: false
 }
