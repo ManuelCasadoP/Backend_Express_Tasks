@@ -1,18 +1,27 @@
 import { db } from "../models/db.mjs"
 
-/*
 export function getOneTaskController (request, response){
-    try {
-        const task = tasks.find(
-            item => item.id === parseInt(request.params.id)
-        )
-        if ( task ) response.json(task)
-        else response.status(404).send(`<b>Solicitud Incorrecta</b><br><br><b>La tarea con el ID: ${request.params.id} no existe.</b>`);
-    } catch (err) {
-        response.sendStatus(400)
-    }
+
+    const { id } = request.body;
+
+    db.get(
+        `SELECT id, description, done FROM tasks WHERE id=${id}`,
+        (err, data)=>{
+            if (err){
+                console.log(`Algo ha funcionado mal...`, err);
+                response.status(500).send(`<b>Algo ha funcionado mal...<br>${err}</b>`);
+            } else if (!data){
+                console.log("No se puede realizar la operación, no existe la tarea.");
+                response.status(404).send(`<b>Solicitud denegada. <br>
+                                           <br> No se puede realizar la operación porque no existe la tarea.<br>
+                                           <br> Introduzca otro id de tarea.</b>`);
+                
+            } else {
+                response.json(data);
+                console.log(data);
+            }
+        });
 }
-*/
 
 export function getAllTasksController (request, response){
 
@@ -29,7 +38,7 @@ export function getAllTasksController (request, response){
         });
 }
 
-export function postTasksController (request, response) {
+export function postTaskController (request, response) {
     const { description, done } = request.body;
     db.run(
         `INSERT INTO tasks(description, done) VALUES ("${description}", ${done})`,

@@ -4,8 +4,10 @@ const PORT = 4000;
 const app = express();
 
 import { getAllUsersController, postUserController, putUserController, deleteUserController } from "./controllers/usersController.mjs";
-import { getAllTasksController, postTasksController } from "./controllers/tasksController.mjs";
-import { validatePutUserJSON, validatePostUserJSON, validateDeleteUserJSON, validateTaskJSON } from "./middleware/jsonValidator.mjs";
+import { getOneTaskController, getAllTasksController, postTaskController } from "./controllers/tasksController.mjs";
+import { validatePutUserJSON, validatePostUserJSON, validateDeleteUserJSON } from "./middleware/jsonValidator.mjs";
+import { validateGetOneTaskJSON, validatePostTaskJSON } from "./middleware/jsonValidator.mjs";
+import { errorsHandler } from "./middleware/errorsHandler.mjs";
 
 try {
     app.use(express.json())  
@@ -23,23 +25,25 @@ try {
 
     // EndPoints para /TASKS/
     
-    //app.get(PATH_PREFIX+"/tasks/:id", getOneTaskController);
+    app.get(PATH_PREFIX+"/tasks/:id", validateGetOneTaskJSON, getOneTaskController);
 
     app.get(PATH_PREFIX + "/tasks/", getAllTasksController);
 
-    app.post(PATH_PREFIX + "/task/", validateTaskJSON, postTasksController);
+    app.post(PATH_PREFIX + "/task/", validatePostTaskJSON, postTaskController);
 
     //app.put(PATH_PREFIX + "/task/", validateTaskJSON, putTasksController);
 
     //app.delete(PATH_PREFIX + "/task/", validateTaskJSON, deleteTasksController);
 
+    app.use(errorsHandler);
+
     app.listen(PORT,()=>{
         console.log(`Servidor Express funcionando en puerto ${PORT}`);
     });
 
-} catch {
-    console.log(`Algo ha funcionado mal...`);
-    response.status(500).send(`<b>Algo ha funcionado mal...</b>`); 
+} catch (error){
+    console.log(`Algo ha funcionado mal...\n ${error}`);
+    response.status(500).send(`<b>Algo ha funcionado mal...<br>${error}</b>`); 
 }    
 
 

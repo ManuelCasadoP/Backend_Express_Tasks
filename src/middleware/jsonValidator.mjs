@@ -2,7 +2,7 @@ import { validate } from "jsonschema";
 
 import { userPostSchema, userPutSchema, userDeleteSchema } from "../schemas/userSchema.mjs";
 
-import { taskSchema } from "../schemas/taskSchema.mjs";
+import { getOneTaskSchema, postTaskSchema } from "../schemas/taskSchema.mjs";
 
 export function validatePostUserJSON ( request, response, next) {
     try {
@@ -11,11 +11,11 @@ export function validatePostUserJSON ( request, response, next) {
             next();
         } else {
             response.status(400);
-            response.send("<b>JSON POST schema error:<br><br> Invalid User data provided</b>");
-            console.error("JSON POST schema error: \n Invalid User data provided");
+            response.send("<b>JSON POST USER schema error:<br><br> Invalid User data provided</b>");
+            console.error("JSON POST USER schema error: \n Invalid User data provided");
         }
     } catch (err) {
-        throw "user POST Schema: Error validating data"
+        throw "POST User Schema: Error validating data"
     }
 }
 
@@ -26,11 +26,11 @@ export function validatePutUserJSON ( request, response, next) {
             next();
         } else {
             response.status(400);
-            response.send("<b>JSON PUT schema error:<br><br> Invalid User data provided</b>");
-            console.error("JSON PUT schema error: \n Invalid User data provided");
+            response.send("<b>JSON PUT USER schema error:<br><br> Invalid User data provided</b>");
+            console.error("JSON PUT USER schema error: \n Invalid User data provided");
         }
     } catch (err) {
-        throw "user POST Schema: Error validating data"
+        throw "PUT User Schema: Error validating data"
     }
 }
 
@@ -41,26 +41,41 @@ export function validateDeleteUserJSON ( request, response, next) {
             next();
         } else {
             response.status(400);
-            response.send("<b>JSON DELETE schema error:<br><br> Invalid User data provided</b>");
-            console.error("JSON DELETE schema error: \n Invalid User data provided");
+            response.send("<b>JSON DELETE USER schema error:<br><br> Invalid User data provided</b>");
+            console.error("JSON DELETE USER schema error: \n Invalid User data provided");
         }
     } catch (err) {
-        throw "user DELETE schema: Error validating data"
+        throw "DELETE User schema: Error validating data"
     }
 }
 
-export function validateTaskJSON ( request, response, next) {
+export function validateGetOneTaskJSON ( request, response, next) {
     try {
-        const validation = validate(request.body, taskSchema)
+        const validation = validate(request.body, getOneTaskSchema)
         if (validation.valid) {
             next();
         } else {
             response.status(400);
-            response.send("<b>JSON schema error:<br><br> Invalid Task data provided</b>");
-            console.error("JSON schema error: \n Invalid Task data provided");
+            response.send("<b>JSON GET One TASK schema error:<br><br> Invalid Task data provided</b>");
+            console.error("JSON GET One TASK schema error: \n Invalid Task data provided");
         }
     } catch (err) {
-        throw "task schema: Error validating data"
+        throw "POST Task schema: Error validating data"
+    }
+}
+
+export function validatePostTaskJSON ( request, response, next) {
+    try {
+        const validation = validate(request.body, postTaskSchema)
+        if (validation.valid) {
+            next();
+        } else {
+            response.status(400);
+            response.send("<b>JSON POST TASK schema error:<br><br> Invalid Task data provided</b>");
+            console.error("JSON POST TASK schema error: \n Invalid Task data provided");
+        }
+    } catch (err) {
+        throw "POST Task schema: Error validating data"
     }
 }
 
