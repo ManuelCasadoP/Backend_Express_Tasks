@@ -30,6 +30,28 @@ export const postTaskSchema = {
     additionalProperties: false
 }
 
+export const putTaskSchema = {
+    
+    type: "object",
+    properties: {
+        id: {
+            description: "id userName number",
+            type: "number",
+            minimun: 0
+        },        
+        description: {
+            description: "Task description",
+            type: "string"
+        },
+        done: {
+            description: "Task status",
+            type: "Boolean"
+        }
+    },
+    required: [ "id", "description", "done" ],
+    additionalProperties: false
+}
+
 export const deleteTaskSchema = {
     
     type: "object",

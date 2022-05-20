@@ -53,6 +53,45 @@ export function postTaskController (request, response) {
     )
 }
 
+export function putTaskController (request, response) {
+    const { id, description, done } = request.body;
+
+    db.get(
+        `SELECT id FROM tasks WHERE id=${id}`,
+        (err, data)=>{
+
+            if (err) {
+                console.log(`Algo ha funcionado mal...`, err);
+                response.status(500).send(`<b>Algo ha funcionado mal:<br>${err}</b>`);
+
+            } else if (data){
+
+                    db.run(
+                        `UPDATE tasks SET description="${description}", done="${done}" WHERE id=${id}`,
+                        (err)=>{
+                            if (err) {
+                                console.log(`Algo ha funcionado mal...`, err);
+                                response.status(500).send(`<b>Algo ha funcionado mal:<br>${err}</b>`);
+
+                            } else {
+                                console.log("La tarea se ha actualizado en la BBDD");
+                                response.status(201).send(`<b>Solicitud Aceptada<br>
+                                                           <br>La tarea se ha actualizado correctamente en la Base de Datos.</b>`);
+                            }
+                        }
+                    )        
+           
+            }  else {
+
+                console.log("No se puede realizar la operación, la tarea no existe.");
+                response.status(404).send(`<b>Solicitud denegada. <br>
+                                        <br> No se puede realizar la operación porque la tarea id: ${id} no existe.<br>
+                                        <br> Introduzca un id de tarea válido para actualizar.</b>`);
+            }
+        }
+    )
+}
+
 export function deleteTaskController (request,response) {
 
     const { id } = request.body;

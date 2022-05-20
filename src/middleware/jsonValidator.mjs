@@ -2,7 +2,7 @@ import { validate } from "jsonschema";
 
 import { postUserSchema, putUserSchema, deleteUserSchema } from "../schemas/userSchema.mjs";
 
-import { getOneTaskSchema, postTaskSchema, deleteTaskSchema } from "../schemas/taskSchema.mjs";
+import { getOneTaskSchema, postTaskSchema, putTaskSchema, deleteTaskSchema } from "../schemas/taskSchema.mjs";
 
 export function validatePostUserJSON ( request, response, next) {
     try {
@@ -76,6 +76,21 @@ export function validatePostTaskJSON ( request, response, next) {
         }
     } catch (err) {
         throw "POST Task schema: Error validating data"
+    }
+}
+
+export function validatePutTaskJSON ( request, response, next) {
+    try {
+        const validation = validate(request.body, putTaskSchema)
+        if (validation.valid) {
+            next();
+        } else {
+            response.status(400);
+            response.send("<b>JSON PUT TASK schema error:<br><br> Invalid Task data provided</b>");
+            console.error("JSON PUT TASK schema error: \n Invalid Task data provided");
+        }
+    } catch (err) {
+        throw "PUT Task schema: Error validating data"
     }
 }
 

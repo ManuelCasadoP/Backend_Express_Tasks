@@ -4,9 +4,9 @@ const PORT = 4000;
 const app = express();
 
 import { getAllUsersController, postUserController, putUserController, deleteUserController } from "./controllers/usersController.mjs";
-import { getOneTaskController, getAllTasksController, postTaskController, deleteTaskController } from "./controllers/tasksController.mjs";
+import { getOneTaskController, getAllTasksController, postTaskController, putTaskController, deleteTaskController } from "./controllers/tasksController.mjs";
 import { validatePutUserJSON, validatePostUserJSON, validateDeleteUserJSON } from "./middleware/jsonValidator.mjs";
-import { validateGetOneTaskJSON, validatePostTaskJSON, validateDeleteTaskJSON } from "./middleware/jsonValidator.mjs";
+import { validateGetOneTaskJSON, validatePostTaskJSON, validatePutTaskJSON, validateDeleteTaskJSON } from "./middleware/jsonValidator.mjs";
 import { errorsHandler } from "./middleware/errorsHandler.mjs";
 
 try {
@@ -31,7 +31,7 @@ try {
 
     app.post(PATH_PREFIX + "/task/", validatePostTaskJSON, postTaskController);
 
-    //app.put(PATH_PREFIX + "/task/", validateTaskJSON, putTasksController);
+    app.put(PATH_PREFIX + "/task/", validatePutTaskJSON, putTaskController);
 
     app.delete(PATH_PREFIX + "/task/", validateDeleteTaskJSON, deleteTaskController);
 

@@ -68,7 +68,7 @@ export function postUserController (request, response) {
 /**
  *  Controlador para Endpoint app.put /user/
  *  ----------------------------------------
- *  Realiza la actualización, mediante la búsqueda por el id, de los datos de un usuario ya existente en la Base de datos.
+ *  Realiza la actualización mediante la búsqueda por el id de los datos de un usuario ya existente en la Base de datos.
  *  Realiza validación de errores:
  *   - No acepta el envío de datos en formato incorrecto mediante validación de JSON.Schema.
  *   - No acepta la actualización de un id no existente.
